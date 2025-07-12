@@ -3,6 +3,7 @@ import App from "../App";
 import FoodSearchPage from "../pages/FoodSearchPage";
 import FoodDetail from "../pages/FoodDetail";
 import CompareFoodsPage from "../pages/CompareFoodsPage";
+import NotFoundPage from "../pages/NotFoundPage";
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,7 @@ const router = createBrowserRouter([
       { path: "food/:foodName/:foodType", element: <FoodDetail /> },
       { path: "food/:foodName/:foodType/:itemId", element: <FoodDetail /> },
       { path: "compare", element: <CompareFoodsPage /> },
+      { path: "*", element: <NotFoundPage /> },
     ],
   },
 ]);
