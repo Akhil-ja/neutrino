@@ -75,7 +75,12 @@ function CompareFoodsPage() {
         }}
       >
         <Box sx={{ mb: 4 }}>
-          <Grid container spacing={3} alignItems="flex-start">
+          <Grid
+            container
+            spacing={3}
+            alignItems="flex-start"
+            direction={{ xs: "column", md: "row" }}
+          >
             <Grid item xs={12} md={6}>
               <Box display="flex" gap={2} mb={2}>
                 <TextField

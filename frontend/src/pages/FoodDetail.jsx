@@ -92,46 +92,78 @@ function FoodDetail() {
         </Typography>
 
         <Paper elevation={3} sx={{ p: 3, mb: 3 }}>
-          <Grid container spacing={3}>
-            
-            <Grid item xs={12} md={foodDetails.photo && foodDetails.photo.highres ? 8 : 12}>
-              <Typography variant="h6" gutterBottom>
-                Nutritional Information
-              </Typography>
-              <Typography>
-                Serving Size: {serving_qty} {serving_unit}
-              </Typography>
-              <Typography>
-                Calories: {nf_calories ? nf_calories.toFixed(2) : "N/A"}
-              </Typography>
-              <Typography>
-                Protein: {nf_protein ? nf_protein.toFixed(2) : "N/A"}g
-              </Typography>
-              <Typography>
-                Carbohydrates:{" "}
-                {nf_total_carbohydrate
-                  ? nf_total_carbohydrate.toFixed(2)
-                  : "N/A"}
-                g
-              </Typography>
-              <Typography>
-                Fat: {nf_total_fat ? nf_total_fat.toFixed(2) : "N/A"}g
-              </Typography>
-            </Grid>
-            {foodDetails.photo && foodDetails.photo.highres && (
-              <Grid item xs={12} md={4} display="flex" justifyContent="flex-end" alignItems="flex-start">
-                <img src={foodDetails.photo.highres} alt={food_name} style={{ width: '150px', height: '150px', objectFit: 'cover', borderRadius: '8px' }} />
+          <Grid container spacing={3} alignItems="flex-start">
+            <Grid item xs={12} md={7}>
+              <Grid container spacing={2} alignItems="center">
+                {foodDetails.photo && foodDetails.photo.highres && (
+                  <Grid
+                    item
+                    xs={12}
+                    sm={4}
+                    display="flex"
+                    justifyContent="center"
+                  >
+                    <img
+                      src={foodDetails.photo.highres}
+                      alt={food_name}
+                      style={{
+                        width: "150px",
+                        height: "150px",
+                        objectFit: "cover",
+                        borderRadius: "8px",
+                      }}
+                    />
+                  </Grid>
+                )}
+                <Grid
+                  item
+                  xs={12}
+                  sm={foodDetails.photo && foodDetails.photo.highres ? 8 : 12}
+                >
+                  <Typography variant="h6" gutterBottom>
+                    Nutritional Information
+                  </Typography>
+                  <Typography>
+                    Serving Size: {serving_qty} {serving_unit}
+                  </Typography>
+                  <Typography>
+                    Calories: {nf_calories ? nf_calories.toFixed(2) : "N/A"}
+                  </Typography>
+                  <Typography>
+                    Protein: {nf_protein ? nf_protein.toFixed(2) : "N/A"}g
+                  </Typography>
+                  <Typography>
+                    Carbohydrates:{" "}
+                    {nf_total_carbohydrate
+                      ? nf_total_carbohydrate.toFixed(2)
+                      : "N/A"}
+                    g
+                  </Typography>
+                  <Typography>
+                    Fat: {nf_total_fat ? nf_total_fat.toFixed(2) : "N/A"}g
+                  </Typography>
+                </Grid>
               </Grid>
-            )}
-            <Grid item xs={12} md={foodDetails.photo && foodDetails.photo.highres ? 4 : 6}>
-              <Typography variant="h6" gutterBottom align="center">
-                Macronutrient Breakdown
-              </Typography>
-              <NutrientChart
-                protein={nf_protein}
-                carbs={nf_total_carbohydrate}
-                fat={nf_total_fat}
-              />
+            </Grid>
+
+            <Grid item xs={12} md={5}>
+              <Box
+                sx={{
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                }}
+              >
+                <Typography variant="h6" gutterBottom align="center">
+                  Macronutrient Breakdown
+                </Typography>
+                <NutrientChart
+                  protein={nf_protein}
+                  carbs={nf_total_carbohydrate}
+                  fat={nf_total_fat}
+                />
+              </Box>
             </Grid>
           </Grid>
         </Paper>

@@ -12,30 +12,33 @@ const useNutritionixApi = () => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
 
-  const execute = useCallback(async (apiCall, ...args) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await apiCall(...args);
-      setLoading(false);
+  const execute = useCallback(
+    async (apiCall, ...args) => {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await apiCall(...args);
+        setLoading(false);
 
-      if (apiCall === getNaturalNutrients && response && response.foods) {
-        response.foods = response.foods.map((food) => ({
-          ...food,
-          common_type:
-            food.common_type || (food.nix_item_id ? "branded" : "common"),
-          nf_protein: food.nf_protein || 0,
-        }));
+        if (apiCall === getNaturalNutrients && response && response.foods) {
+          response.foods = response.foods.map((food) => ({
+            ...food,
+            common_type:
+              food.common_type || (food.nix_item_id ? "branded" : "common"),
+            nf_protein: food.nf_protein || 0,
+          }));
+        }
+
+        return { data: response, error: null };
+      } catch (err) {
+        setLoading(false);
+        setError(err);
+        dispatch(showError(err.message));
+        return { data: null, error: err };
       }
-
-      return { data: response, error: null };
-    } catch (err) {
-      setLoading(false);
-      setError(err);
-      dispatch(showError(err.message)); // Dispatch error message to Redux store
-      return { data: null, error: err };
-    }
-  }, [dispatch]);
+    },
+    [dispatch]
+  );
 
   const instantSearch = useCallback(
     (query) => execute(searchInstant, query),

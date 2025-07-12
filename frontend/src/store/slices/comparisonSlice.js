@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const comparisonSlice = createSlice({
-  name: 'comparison',
+  name: "comparison",
   initialState: {
     food1: null,
     food2: null,
@@ -22,5 +22,6 @@ const comparisonSlice = createSlice({
   },
 });
 
-export const { setFood1, setFood2, clearFood1, clearFood2 } = comparisonSlice.actions;
+export const { setFood1, setFood2, clearFood1, clearFood2 } =
+  comparisonSlice.actions;
 export default comparisonSlice.reducer;

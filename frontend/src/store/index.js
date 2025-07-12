@@ -1,7 +1,7 @@
-import { configureStore } from '@reduxjs/toolkit';
-import foodReducer from './slices/foodSlice';
-import comparisonReducer from './slices/comparisonSlice';
-import errorReducer from './slices/errorSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import foodReducer from "./slices/foodSlice";
+import comparisonReducer from "./slices/comparisonSlice";
+import errorReducer from "./slices/errorSlice";
 
 export const store = configureStore({
   reducer: {

@@ -105,7 +105,7 @@ function FoodSearchPage() {
             justifyContent: "space-between",
             alignItems: "center",
             mb: 3,
-            flexWrap: "wrap",
+            flexDirection: { xs: "column", sm: "row" },
             gap: 2,
           }}
         >

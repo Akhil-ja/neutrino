@@ -28,7 +28,8 @@ function FoodList({ foodResults }) {
     display: "flex",
     flexDirection: "column",
     border: "1px solid #e0e0e0",
-    width: 170,
+    width: "100%",
+    maxWidth: 180,
     // maxWidth: 180,
     transition: "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out",
     "&:hover": {

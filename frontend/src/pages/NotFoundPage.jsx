@@ -1,23 +1,23 @@
-import React from 'react';
-import { Box, Typography, Button, Container } from '@mui/material';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Box, Typography, Button, Container } from "@mui/material";
+import { Link } from "react-router-dom";
 
 function NotFoundPage() {
   return (
     <Container
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '80vh',
-        textAlign: 'center',
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "80vh",
+        textAlign: "center",
       }}
     >
-      <Typography variant="h1" component="h1" gutterBottom>
+      <Typography variant="h1" component="h1" gutterBottom sx={{ fontSize: { xs: '6rem', sm: '8rem' } }}>
         404
       </Typography>
-      <Typography variant="h5" component="h2" gutterBottom>
+      <Typography variant="h5" component="h2" gutterBottom sx={{ fontSize: { xs: '1.25rem', sm: '1.5rem' } }}>
         Page Not Found
       </Typography>
       <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
