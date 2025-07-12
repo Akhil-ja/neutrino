@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect, useRef } from "react";
 import {
   Container,
   Typography,
@@ -27,6 +27,18 @@ function FoodSearchPage() {
     (state) => state.food
   );
 
+  const fetchedProteinRef = useRef({});
+
+  useEffect(() => {
+    foodResults.forEach((food) => {
+      const foodId = food.nix_item_id || food.food_name;
+      if (food.nf_protein === undefined && !fetchedProteinRef.current[foodId]) {
+        dispatch(fetchProteinForFood(food));
+        fetchedProteinRef.current[foodId] = true;
+      }
+    });
+  }, [foodResults, dispatch]);
+
   const handleSortChange = (event) => {
     const newSortBy = event.target.value;
     dispatch(setSortBy(newSortBy));
@@ -48,7 +60,6 @@ function FoodSearchPage() {
   };
 
   const filteredAndSortedFood = useMemo(() => {
-    console.log("Original:", foodResults);
     let filtered = foodResults;
 
     if (filterType === "common") {
@@ -79,8 +90,6 @@ function FoodSearchPage() {
     });
     return sorted;
   }, [foodResults, sortBy, filterType]);
-
-  console.log("Filter:", filteredAndSortedFood);
 
   return (
     <Container maxWidth="xl" sx={{ px: 3 }}>
