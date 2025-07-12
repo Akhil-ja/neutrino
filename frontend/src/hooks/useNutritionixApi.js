@@ -20,13 +20,18 @@ const useNutritionixApi = () => {
         const response = await apiCall(...args);
         setLoading(false);
 
-        if (apiCall === getNaturalNutrients && response && response.foods) {
-          response.foods = response.foods.map((food) => ({
-            ...food,
-            common_type:
-              food.common_type || (food.nix_item_id ? "branded" : "common"),
-            nf_protein: food.nf_protein || 0,
-          }));
+        const normalizeNutrients = (food) => ({
+          ...food,
+          common_type:
+            food.common_type || (food.nix_item_id ? "branded" : "common"),
+          nf_calories: food.nf_calories || 0,
+          nf_protein: food.nf_protein || 0,
+          nf_total_carbohydrate: food.nf_total_carbohydrate || 0,
+          nf_total_fat: food.nf_total_fat || 0,
+        });
+
+        if (response && response.foods) {
+          response.foods = response.foods.map(normalizeNutrients);
         }
 
         return { data: response, error: null };

@@ -220,19 +220,6 @@ function FoodList({ foodResults }) {
                       ? `Calories: ${food.nf_calories.toFixed(0)}`
                       : "Calories: N/A"}
                   </Typography>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{
-                      fontSize: "0.75rem",
-                      lineHeight: 1.2,
-                      height: "1.2em",
-                    }}
-                  >
-                    {food.nf_protein !== undefined
-                      ? `Protein: ${food.nf_protein.toFixed(1)}g`
-                      : "Protein: N/A"}
-                  </Typography>
                 </Box>
               </CardContent>
             </CardActionArea>

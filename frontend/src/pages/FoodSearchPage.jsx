@@ -23,36 +23,13 @@ import {
 function FoodSearchPage() {
   const dispatch = useDispatch();
 
-  const { foodResults, sortBy, filterType, proteinFetching } = useSelector(
+  const { foodResults, sortBy, filterType } = useSelector(
     (state) => state.food
   );
-
-  const fetchedProteinRef = useRef({});
-
-  useEffect(() => {
-    foodResults.forEach((food) => {
-      const foodId = food.nix_item_id || food.food_name;
-      if (food.nf_protein === undefined && !fetchedProteinRef.current[foodId]) {
-        dispatch(fetchProteinForFood(food));
-        fetchedProteinRef.current[foodId] = true;
-      }
-    });
-  }, [foodResults, dispatch]);
 
   const handleSortChange = (event) => {
     const newSortBy = event.target.value;
     dispatch(setSortBy(newSortBy));
-
-    if (newSortBy === "protein_asc" || newSortBy === "protein_desc") {
-      foodResults.forEach((food) => {
-        if (
-          food.nf_protein === undefined &&
-          !proteinFetching[food.nix_item_id || food.food_name]
-        ) {
-          dispatch(fetchProteinForFood(food));
-        }
-      });
-    }
   };
 
   const handleFilterChange = (event) => {
@@ -81,10 +58,6 @@ function FoodSearchPage() {
         const brandA = a.brand_name || "";
         const brandB = b.brand_name || "";
         return brandB.localeCompare(brandA);
-      } else if (sortBy === "protein_desc") {
-        return (b.nf_protein || 0) - (a.nf_protein || 0);
-      } else if (sortBy === "protein_asc") {
-        return (a.nf_protein || 0) - (b.nf_protein || 0);
       }
       return 0;
     });
@@ -122,8 +95,6 @@ function FoodSearchPage() {
               <MenuItem value="name_desc">Name (Z-A)</MenuItem>
               <MenuItem value="brand_asc">Brand Name (A-Z)</MenuItem>
               <MenuItem value="brand_desc">Brand Name (Z-A)</MenuItem>
-              <MenuItem value="protein_desc">Protein (High to Low)</MenuItem>
-              <MenuItem value="protein_asc">Protein (Low to High)</MenuItem>
             </Select>
           </FormControl>
 
