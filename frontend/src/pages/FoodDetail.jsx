@@ -93,7 +93,8 @@ function FoodDetail() {
 
         <Paper elevation={3} sx={{ p: 3, mb: 3 }}>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={6}>
+            
+            <Grid item xs={12} md={foodDetails.photo && foodDetails.photo.highres ? 8 : 12}>
               <Typography variant="h6" gutterBottom>
                 Nutritional Information
               </Typography>
@@ -117,7 +118,12 @@ function FoodDetail() {
                 Fat: {nf_total_fat ? nf_total_fat.toFixed(2) : "N/A"}g
               </Typography>
             </Grid>
-            <Grid item xs={12} md={6}>
+            {foodDetails.photo && foodDetails.photo.highres && (
+              <Grid item xs={12} md={4} display="flex" justifyContent="flex-end" alignItems="flex-start">
+                <img src={foodDetails.photo.highres} alt={food_name} style={{ width: '150px', height: '150px', objectFit: 'cover', borderRadius: '8px' }} />
+              </Grid>
+            )}
+            <Grid item xs={12} md={foodDetails.photo && foodDetails.photo.highres ? 4 : 6}>
               <Typography variant="h6" gutterBottom align="center">
                 Macronutrient Breakdown
               </Typography>

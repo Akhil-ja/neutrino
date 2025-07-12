@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, Typography, Box, LinearProgress } from '@mui/material';
+import { Card, CardContent, Typography, Box, LinearProgress, CardMedia } from '@mui/material';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 
 function FoodComparisonCard({ food, compareFood }) {
@@ -56,6 +56,14 @@ function FoodComparisonCard({ food, compareFood }) {
         <Typography variant="h5" component="div" gutterBottom>
           {food.food_name} {food.brand_name && `(${food.brand_name})`}
         </Typography>
+        {food.photo && food.photo.thumb && (
+          <CardMedia
+            component="img"
+            sx={{ width: 80, height: 80, borderRadius: '4px', mb: 1 }}
+            image={food.photo.thumb}
+            alt={food.food_name}
+          />
+        )}
         <Typography variant="body1" sx={{ color: getComparisonColor(food.nf_calories, compareFood?.nf_calories) }}>
           Calories: {food.nf_calories ? food.nf_calories.toFixed(2) : 'N/A'}
           {getComparisonIndicator(food.nf_calories, compareFood?.nf_calories)}
