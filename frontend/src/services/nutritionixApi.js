@@ -16,7 +16,11 @@ export const searchInstant = async (query) => {
     body: JSON.stringify({ query }),
   });
   if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
+    if (response.status === 404) {
+      throw new Error("No results found. Please check your spelling or try a different search term.");
+    } else {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
   }
   return response.json();
 };
@@ -28,7 +32,11 @@ export const getNaturalNutrients = async (query) => {
     body: JSON.stringify({ query }),
   });
   if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
+    if (response.status === 404) {
+      throw new Error("No results found. Please check your spelling or try a different search term.");
+    } else {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
   }
   return response.json();
 };
@@ -39,7 +47,11 @@ export const getItemById = async (nix_item_id) => {
     headers: headers,
   });
   if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
+    if (response.status === 404) {
+      throw new Error("No results found. Please check your spelling or try a different search term.");
+    } else {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
   }
   return response.json();
 };

@@ -1,13 +1,16 @@
 import { useState, useCallback } from "react";
+import { useDispatch } from "react-redux";
 import {
   searchInstant,
   getNaturalNutrients,
   getItemById,
 } from "../services/nutritionixApi";
+import { showError } from "../store/slices/errorSlice";
 
 const useNutritionixApi = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const dispatch = useDispatch();
 
   const execute = useCallback(async (apiCall, ...args) => {
     setLoading(true);
@@ -29,9 +32,10 @@ const useNutritionixApi = () => {
     } catch (err) {
       setLoading(false);
       setError(err);
+      dispatch(showError(err.message)); // Dispatch error message to Redux store
       return { data: null, error: err };
     }
-  }, []);
+  }, [dispatch]);
 
   const instantSearch = useCallback(
     (query) => execute(searchInstant, query),

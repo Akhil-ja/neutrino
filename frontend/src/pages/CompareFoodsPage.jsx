@@ -25,35 +25,25 @@ function CompareFoodsPage() {
   const [searchTerm1, setSearchTerm1] = useState("");
   const [searchTerm2, setSearchTerm2] = useState("");
 
-  const {
-    loading: loading1,
-    error: error1,
-    naturalNutrients: naturalNutrients1,
-  } = useNutritionixApi();
-  const {
-    loading: loading2,
-    error: error2,
-    naturalNutrients: naturalNutrients2,
-  } = useNutritionixApi();
+  const { loading: loading1, naturalNutrients: naturalNutrients1 } =
+    useNutritionixApi();
+  const { loading: loading2, naturalNutrients: naturalNutrients2 } =
+    useNutritionixApi();
 
   const handleSearch1 = async () => {
     if (searchTerm1.trim()) {
-      const { data, error: apiError } = await naturalNutrients1(searchTerm1);
+      const { data } = await naturalNutrients1(searchTerm1);
       if (data && data.foods && data.foods.length > 0) {
         dispatch(setFood1(data.foods[0]));
-      } else if (apiError) {
-        console.error("Search 1 API Error:", apiError);
       }
     }
   };
 
   const handleSearch2 = async () => {
     if (searchTerm2.trim()) {
-      const { data, error: apiError } = await naturalNutrients2(searchTerm2);
+      const { data } = await naturalNutrients2(searchTerm2);
       if (data && data.foods && data.foods.length > 0) {
         dispatch(setFood2(data.foods[0]));
-      } else if (apiError) {
-        console.error("Search 2 API Error:", apiError);
       }
     }
   };
@@ -111,11 +101,7 @@ function CompareFoodsPage() {
                   Clear
                 </Button>
               </Box>
-              {error1 && (
-                <Typography color="error">
-                  Error: {error1.message || "Failed to fetch food 1."}
-                </Typography>
-              )}
+
               {food1 && <FoodComparisonCard food={food1} compareFood={food2} />}
             </Grid>
 
@@ -144,11 +130,7 @@ function CompareFoodsPage() {
                   Clear
                 </Button>
               </Box>
-              {error2 && (
-                <Typography color="error">
-                  Error: {error2.message || "Failed to fetch food 2."}
-                </Typography>
-              )}
+
               {food2 && <FoodComparisonCard food={food2} compareFood={food1} />}
             </Grid>
           </Grid>
