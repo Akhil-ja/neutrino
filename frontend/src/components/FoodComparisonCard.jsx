@@ -17,7 +17,7 @@ function FoodComparisonCard({ food, compareFood }) {
     return ' (Same)';
   };
 
-  const createChartData = (nutrientKey, label) => {
+  const createChartData = (nutrientKey) => {
     const data = [];
     if (food && food[nutrientKey] !== undefined) {
       data.push({ name: food.food_name, value: food[nutrientKey] });

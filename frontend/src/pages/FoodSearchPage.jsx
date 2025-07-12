@@ -14,16 +14,32 @@ import {
 import SearchBar from "../components/SearchBar";
 import FoodList from "../components/FoodList";
 import { useDispatch, useSelector } from "react-redux";
-import { setSortBy, setFilterType } from "../store/slices/foodSlice";
+import {
+  setSortBy,
+  setFilterType,
+  fetchProteinForFood,
+} from "../store/slices/foodSlice";
 
 function FoodSearchPage() {
   const dispatch = useDispatch();
-  const { foodResults, sortBy, filterType } = useSelector(
+  const { foodResults, sortBy, filterType, proteinFetching } = useSelector(
     (state) => state.food
   );
 
   const handleSortChange = (event) => {
-    dispatch(setSortBy(event.target.value));
+    const newSortBy = event.target.value;
+    dispatch(setSortBy(newSortBy));
+
+    if (newSortBy === "protein_asc" || newSortBy === "protein_desc") {
+      foodResults.forEach((food) => {
+        if (
+          food.nf_protein === undefined &&
+          !proteinFetching[food.nix_item_id || food.food_name]
+        ) {
+          dispatch(fetchProteinForFood(food));
+        }
+      });
+    }
   };
 
   const handleFilterChange = (event) => {
@@ -31,12 +47,13 @@ function FoodSearchPage() {
   };
 
   const filteredAndSortedFood = useMemo(() => {
+    console.log("Original:", foodResults);
     let filtered = foodResults;
 
     if (filterType === "common") {
-      filtered = filtered.filter((food) => food.common_type === "common");
+      filtered = filtered.filter((food) => !food.nix_item_id);
     } else if (filterType === "branded") {
-      filtered = filtered.filter((food) => food.common_type === "branded");
+      filtered = filtered.filter((food) => food.nix_item_id);
     }
 
     const sorted = [...filtered].sort((a, b) => {
@@ -52,11 +69,17 @@ function FoodSearchPage() {
         const brandA = a.brand_name || "";
         const brandB = b.brand_name || "";
         return brandB.localeCompare(brandA);
+      } else if (sortBy === "protein_desc") {
+        return (b.nf_protein || 0) - (a.nf_protein || 0);
+      } else if (sortBy === "protein_asc") {
+        return (a.nf_protein || 0) - (b.nf_protein || 0);
       }
       return 0;
     });
     return sorted;
   }, [foodResults, sortBy, filterType]);
+
+  console.log("Filter:", filteredAndSortedFood);
 
   return (
     <Container maxWidth="md">
@@ -87,6 +110,8 @@ function FoodSearchPage() {
               <MenuItem value="name_desc">Name (Z-A)</MenuItem>
               <MenuItem value="brand_asc">Brand Name (A-Z)</MenuItem>
               <MenuItem value="brand_desc">Brand Name (Z-A)</MenuItem>
+              <MenuItem value="protein_desc">Protein (High to Low)</MenuItem>
+              <MenuItem value="protein_asc">Protein (Low to High)</MenuItem>
             </Select>
           </FormControl>
 

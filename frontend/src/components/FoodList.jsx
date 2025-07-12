@@ -1,14 +1,28 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { CircularProgress, Typography, Box, Card, CardContent, CardMedia, Grid, CardActionArea } from '@mui/material';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { useSelector } from "react-redux";
+import {
+  CircularProgress,
+  Typography,
+  Box,
+  Card,
+  CardContent,
+  CardMedia,
+  Grid,
+  CardActionArea,
+} from "@mui/material";
+import { Link } from "react-router-dom";
 
-function FoodList() {
-  const { foodResults, loading, error } = useSelector((state) => state.food);
+function FoodList({ foodResults }) {
+  const { loading, error } = useSelector((state) => state.food);
 
   if (loading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="200px"
+      >
         <CircularProgress />
       </Box>
     );
@@ -17,7 +31,7 @@ function FoodList() {
   if (error) {
     return (
       <Typography color="error" align="center">
-        Error: {error.message || 'Something went wrong'}
+        Error: {error.message || "Something went wrong"}
       </Typography>
     );
   }
@@ -34,8 +48,11 @@ function FoodList() {
     <Grid container spacing={3}>
       {foodResults.map((food, index) => (
         <Grid item xs={12} sm={6} md={4} key={index}>
-          <Card sx={{ display: 'flex', height: '100%' }}>
-            <CardActionArea component={Link} to={`/food/${encodeURIComponent(food.food_name)}/${food.nix_item_id ? 'branded' : 'common'}${food.nix_item_id ? '/' + food.nix_item_id : ''}`}>
+          <Card sx={{ display: "flex", height: "100%" }}>
+            <CardActionArea
+              component={Link}
+              to={`/food/${encodeURIComponent(food.food_name)}/${food.nix_item_id ? "branded" : "common"}${food.nix_item_id ? "/" + food.nix_item_id : ""}`}
+            >
               {food.photo && food.photo.thumb && (
                 <CardMedia
                   component="img"
@@ -44,7 +61,9 @@ function FoodList() {
                   alt={food.food_name}
                 />
               )}
-              <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+              <Box
+                sx={{ display: "flex", flexDirection: "column", flexGrow: 1 }}
+              >
                 <CardContent sx={{ flexGrow: 1 }}>
                   <Typography component="div" variant="h6">
                     {food.food_name}
