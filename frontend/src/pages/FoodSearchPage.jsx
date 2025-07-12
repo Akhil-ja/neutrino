@@ -22,6 +22,7 @@ import {
 
 function FoodSearchPage() {
   const dispatch = useDispatch();
+
   const { foodResults, sortBy, filterType, proteinFetching } = useSelector(
     (state) => state.food
   );
@@ -82,7 +83,7 @@ function FoodSearchPage() {
   console.log("Filter:", filteredAndSortedFood);
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="xl" sx={{ px: 3 }}>
       <Box sx={{ my: 4 }}>
         <Typography variant="h4" component="h1" gutterBottom align="center">
           Neutrino - Food Search
@@ -95,9 +96,11 @@ function FoodSearchPage() {
             justifyContent: "space-between",
             alignItems: "center",
             mb: 3,
+            flexWrap: "wrap",
+            gap: 2,
           }}
         >
-          <FormControl sx={{ minWidth: 120 }}>
+          <FormControl sx={{ minWidth: 160 }}>
             <InputLabel id="sort-by-label">Sort By</InputLabel>
             <Select
               labelId="sort-by-label"
