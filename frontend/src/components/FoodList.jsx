@@ -39,7 +39,7 @@ function FoodList({ foodResults }) {
 
   if (loading) {
     return (
-      <Grid container spacing={2}>
+      <Grid container spacing={2} justifyContent="center">
         {Array.from(new Array(8)).map((_, index) => (
           <Grid item key={index} {...gridItemProps}>
             <Card sx={cardStyle}>
@@ -87,7 +87,7 @@ function FoodList({ foodResults }) {
   }
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} justifyContent="center">
       {foodResults.map((food, index) => (
         <Grid item key={index} {...gridItemProps}>
           <Card sx={cardStyle}>
